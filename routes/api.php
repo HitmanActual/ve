@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
@@ -36,6 +37,10 @@ Route::group(['prefix'=>'countries'],function(){
 });
 
 
-Route::group(['prefix'=>'developers'],function (){
+Route::group(['prefix'=>'projects'],function (){
+
+    Route::get('/',[ProjectController::class,'index']);
+    Route::get('/{project}',[ProjectController::class,'show']);
+    Route::post('/',[ProjectController::class,'store']);
 
 });

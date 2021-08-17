@@ -9,11 +9,11 @@ class Project extends Model
 {
     //
     use SoftDeletes;
-    protected $fillabe = [
+    protected $fillable = [
         'title',
         'city_id',
         'developer_id',
-        'tod',
+
     ];
 
     public function developer(){
