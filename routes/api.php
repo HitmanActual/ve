@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\StateController;
+use App\Http\Controllers\Api\AuthController;
 
 
 /*
@@ -21,9 +22,9 @@ use App\Http\Controllers\Api\StateController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 
 
@@ -52,7 +53,6 @@ Route::group(['prefix'=>'units'],function (){
     Route::get('/',[UnitController::class,'index']);
     Route::get('/{unit}',[UnitController::class,'show']);
 
-
 });
 
 Route::group(['prefix'=>'developers'],function (){
@@ -60,8 +60,24 @@ Route::group(['prefix'=>'developers'],function (){
     Route::get('/',[DeveloperController::class,'index']);
     Route::get('/{developer}',[DeveloperController::class,'show']);
 
+});
+
+Route::group(['prefix'=>'reservations'],function (){
+
+    Route::get('/',[DeveloperController::class,'index']);
+    Route::get('/{developer}',[DeveloperController::class,'show']);
 
 });
+
+
+Route::group(['prefix'=>'users'],function (){
+
+    Route::post('/register',[AuthController::class,'register']);
+    Route::post('/login',[AuthController::class,'login']);
+
+});
+
+
 
 
 
