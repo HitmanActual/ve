@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\StateController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Admin Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -18,24 +18,11 @@ use App\Http\Controllers\Api\StateController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
 
 
 
-//---
-Route::group(['prefix'=>'countries'],function(){
 
-    Route::get('/',[CountryController::class,'index']);
-
-    Route::get('/states/{country_id}', [StateController::class,'getStateByCountryId']);
-    Route::get('/cities/{state_id}', [CityController::class,'getCityByStateId']);
-
-});
-
-
-Route::group(['prefix'=>'developers'],function (){
-
-});
