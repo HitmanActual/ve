@@ -23,4 +23,8 @@ class Project extends Model
     public function city(){
         return $this->belongsTo(City::class);
     }
+
+    public function unit(){
+        return $this->hasMany(Unit::class);
+    }
 }

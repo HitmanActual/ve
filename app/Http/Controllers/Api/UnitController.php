@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use App\Models\Unit;
+use App\Traits\ResponseTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UnitController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +19,11 @@ class UnitController extends Controller
     public function index()
     {
         //
+        $units = Unit::with('project','developer')->get();
+        return $this->successResponse($units, Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -44,21 +42,21 @@ class UnitController extends Controller
      * @param  \App\Models\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function show(Unit $unit)
+    public function show($unit)
     {
-        //
+        try{
+
+            $unit = Unit::with('developer','project')->findOrFail($unit);
+            return $this->successResponse($unit, Response::HTTP_OK);
+
+        }catch(ModelNotFoundException $ex){
+
+            return "could find unit with this id";
+        }
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Unit $unit)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.

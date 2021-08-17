@@ -15,6 +15,15 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('project_id')->constrained();
+            $table->unsignedBigInteger('developer_id')->constrained();
+            $table->enum('usage',['commercial','residential'])->default('residential');
+            $table->enum('unit_type',['condo','villa','office','penthouse'])->default('condo');
+            $table->string('floor_space');
+            $table->string('bedroom');
+            $table->string('bathroom');
+            $table->enum('status',['available','sold','reserved'])->default('available');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

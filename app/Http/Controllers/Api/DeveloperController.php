@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 
 use App\Models\Developer;
+use App\Models\Unit;
+use App\Traits\ResponseTrait;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DeveloperController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,17 +21,11 @@ class DeveloperController extends Controller
     public function index()
     {
         //
+        $developers = Developer::with('project')->get();
+        return $this->successResponse($developers, Response::HTTP_OK);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,21 +44,21 @@ class DeveloperController extends Controller
      * @param  \App\Models\Developer  $developer
      * @return \Illuminate\Http\Response
      */
-    public function show(Developer $developer)
+    public function show($developer)
     {
         //
+
+        try{
+
+            $developer = Unit::with('project')->findOrFail($developer);
+            return $this->successResponse($developer, Response::HTTP_OK);
+
+        }catch(ModelNotFoundException $ex){
+
+            return "could'nt find developer with this id";
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Developer $developer)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
