@@ -28,4 +28,9 @@ class Unit extends Model
     public function developer(){
         return $this->belongsTo(Developer::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }

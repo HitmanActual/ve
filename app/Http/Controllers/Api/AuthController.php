@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -50,4 +51,9 @@ class AuthController extends Controller
        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
 
    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        return $this->successResponse('successfully logged out',Response::HTTP_OK);
+    }
 }

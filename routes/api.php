@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\DeveloperController;
 use Illuminate\Http\Request;
@@ -62,10 +63,11 @@ Route::group(['prefix'=>'developers'],function (){
 
 });
 
-Route::group(['prefix'=>'reservations'],function (){
+Route::group(['prefix'=>'reservations','middleware'=>'auth:api'],function (){
 
-    Route::get('/',[DeveloperController::class,'index']);
-    Route::get('/{developer}',[DeveloperController::class,'show']);
+    Route::get('/',[ReservationController::class,'index']);
+    Route::get('/{reservation}',[ReservationController::class,'show']);
+    Route::post('/',[ReservationController::class,'store']);
 
 });
 
