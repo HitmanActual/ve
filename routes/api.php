@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UnitController;
@@ -70,6 +71,17 @@ Route::group(['prefix'=>'reservations','middleware'=>'auth:api'],function (){
     Route::post('/',[ReservationController::class,'store']);
 
 });
+
+
+Route::group(['prefix'=>'favorites','middleware'=>'auth:api'],function (){
+
+    Route::get('/',[FavoriteController::class,'index']);
+    Route::get('/{favorite}',[FavoriteController::class,'show']);
+    Route::post('/',[FavoriteController::class,'store']);
+    Route::delete('/{favorite}',[FavoriteController::class,'destroy']);
+
+});
+
 
 
 Route::group(['prefix'=>'users'],function (){
