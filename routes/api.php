@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ReservationController;
@@ -88,6 +89,14 @@ Route::group(['prefix'=>'users'],function (){
 
     Route::post('/register',[AuthController::class,'register']);
     Route::post('/login',[AuthController::class,'login']);
+
+});
+
+
+Route::group(['prefix'=>'admin'],function (){
+
+    Route::post('/register',[AdminController::class,'register']);
+    Route::post('/login',[AdminController::class,'login']);
 
 });
 

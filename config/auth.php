@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -46,6 +48,19 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'developers',
+            'hash' => false,
+        ],
+
+
+        'admin-api' => [
+            'driver' => 'passport',
+            'provider' => 'developers',
+        ],
     ],
 
     /*
@@ -69,6 +84,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+
+        'developers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Developer::class,
         ],
 
         // 'users' => [
