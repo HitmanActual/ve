@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Developer;
 use App\Models\User;
 use App\Traits\ResponseTrait;
@@ -19,18 +20,17 @@ class AdminController extends Controller
     {
 
         $validateData = $request->validate([
-            'commercial_name' => 'required|max:55',
-            'contact_person' => 'required|max:55',
+            'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed',
-            'phone' => 'required|regex:/(01)[0-9]{9}/',
+
 
 
         ]);
 
         $validateData['password'] = bcrypt($request->password);
 
-        $user = Developer::create($validateData);
+        $user = Admin::create($validateData);
         $accessToken = $user->createToken('authToken')->accessToken;
 
         return response(['user' => $user, 'access_token' => $accessToken]);
@@ -41,12 +41,10 @@ class AdminController extends Controller
     public function login(Request $request)
     {
 
-
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required',
         ]);
-
 
 
 

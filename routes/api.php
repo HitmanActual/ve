@@ -93,10 +93,20 @@ Route::group(['prefix'=>'users'],function (){
 });
 
 
-Route::group(['prefix'=>'admin'],function (){
+//--------admins
+Route::group(['prefix'=>'admins'],function (){
 
     Route::post('/register',[AdminController::class,'register']);
     Route::post('/login',[AdminController::class,'login']);
+
+});
+
+
+//--------developers
+Route::group(['prefix'=>'developers'],function (){
+
+    Route::post('/register',[DeveloperController::class,'register']);
+    Route::post('/login',[DeveloperController::class,'login']);
 
 });
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Developer;
 use App\Models\User;
 
 return [
@@ -52,12 +53,25 @@ return [
 
         'admin' => [
             'driver' => 'session',
-            'provider' => 'developers',
+            'provider' => 'admins',
             'hash' => false,
         ],
 
 
         'admin-api' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
+
+
+        'developer' => [
+            'driver' => 'session',
+            'provider' => 'developers',
+            'hash' => false,
+        ],
+
+
+        'developer-api' => [
             'driver' => 'passport',
             'provider' => 'developers',
         ],
@@ -91,6 +105,15 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Developer::class,
         ],
+
+
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+
+
 
         // 'users' => [
         //     'driver' => 'database',

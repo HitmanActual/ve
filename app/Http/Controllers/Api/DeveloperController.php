@@ -9,6 +9,7 @@ use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DeveloperController extends Controller
 {
@@ -81,5 +82,59 @@ class DeveloperController extends Controller
     public function destroy(Developer $developer)
     {
         //
+    }
+
+
+
+    //----credintails
+
+    public function register(Request $request)
+    {
+
+        $validateData = $request->validate([
+            'commercial_name' => 'required|max:55',
+            'contact_person' => 'required|max:55',
+            'email' => 'email|required|unique:users',
+            'password' => 'required|confirmed',
+            'phone' => 'required|regex:/(01)[0-9]{9}/',
+
+
+        ]);
+
+        $validateData['password'] = bcrypt($request->password);
+
+        $user = Developer::create($validateData);
+        $accessToken = $user->createToken('authToken')->accessToken;
+
+        return response(['user' => $user, 'access_token' => $accessToken]);
+
+        return $this->successResponse($user, Response::HTTP_CREATED);
+    }
+
+    public function login(Request $request)
+    {
+
+
+        $loginData = $request->validate([
+            'email' => 'email|required',
+            'password' => 'required',
+        ]);
+
+
+
+        if (!Auth::guard('developer')->attempt($loginData)) {
+
+            return $this->errorResponse('invalid credentials', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $accessToken = auth('developer')->user()->createToken('authToken')->accessToken;
+        return response(['user' => auth('developer')->user(), 'access_token' => $accessToken]);
+
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return $this->successResponse('successfully logged out', Response::HTTP_OK);
     }
 }
