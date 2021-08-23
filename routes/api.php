@@ -68,6 +68,13 @@ Route::group(['prefix'=>'units'],function (){
 
     //---admin units---
 
+    Route::post('/',[UnitController::class,'store'])->middleware('auth:admin-api');
+    Route::patch('/{unit}',[UnitController::class,'update'])->middleware('auth:admin-api');
+    Route::put('/{unit}',[UnitController::class,'update'])->middleware('auth:admin-api');
+    Route::delete('/{unit}',[UnitController::class,'destroy'])->middleware('auth:admin-api');
+
+
+
 });
 
 Route::group(['prefix'=>'developers'],function (){

@@ -41,15 +41,15 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        $validateDate = $request->validate([
+            'title' => 'required|max:255',
+            'city_id' => 'required|max:255',
+            'developer_id' => 'required|max:255',
+            'tod' => 'required|max:255',
+        ]);
         DB::beginTransaction();
         try {
-            $project = Project:: create([
-
-                'title' => $request->title,
-                'city_id' => $request->city_id,
-                'developer_id' => $request->developer_id,
-                'tod' => $request->tod,
-            ]);
+            $project = Project:: create($validateDate);
 
 
             DB::commit();
@@ -104,7 +104,7 @@ class ProjectController extends Controller
             return $this->successResponse($project, Response::HTTP_OK);
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
-            abort(500, "couldn't update the order");
+            abort(500, "couldn't update the project");
         }
 
     }
