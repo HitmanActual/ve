@@ -30,97 +30,97 @@ use App\Http\Controllers\Api\AuthController;
 //});
 
 
-Route::group(['prefix'=>'countries'],function(){
+Route::group(['prefix' => 'countries'], function () {
 
-    Route::get('/',[CountryController::class,'index']);
+    Route::get('/', [CountryController::class, 'index']);
 
-    Route::get('/states/{country_id}', [StateController::class,'getStateByCountryId']);
-    Route::get('/cities/{state_id}', [CityController::class,'getCityByStateId']);
+    Route::get('/states/{country_id}', [StateController::class, 'getStateByCountryId']);
+    Route::get('/cities/{state_id}', [CityController::class, 'getCityByStateId']);
 
 
     //-----admin city routes----
-    Route::post('/',[CityController::class,'store'])->middleware('auth:admin-api');
-    Route::patch('/{city}',[CityController::class,'update'])->middleware('auth:admin-api');
-    Route::put('/{city}',[CityController::class,'update'])->middleware('auth:admin-api');
-    Route::delete('/{city}',[CityController::class,'destroy'])->middleware('auth:admin-api');
+    Route::post('/', [CityController::class, 'store'])->middleware('auth:admin-api');
+    Route::patch('/{city}', [CityController::class, 'update'])->middleware('auth:admin-api');
+    Route::put('/{city}', [CityController::class, 'update'])->middleware('auth:admin-api');
+    Route::delete('/{city}', [CityController::class, 'destroy'])->middleware('auth:admin-api');
 
 });
 
 
-Route::group(['prefix'=>'projects'],function (){
+Route::group(['prefix' => 'projects'], function () {
 
-    Route::get('/',[ProjectController::class,'index']);
-    Route::get('/{project}',[ProjectController::class,'show']);
+    Route::get('/', [ProjectController::class, 'index']);
+    Route::get('/{project}', [ProjectController::class, 'show']);
 
     //---- admin routes ------
-    Route::post('/',[ProjectController::class,'store'])->middleware('auth:admin-api');
-    Route::patch('/{project}',[ProjectController::class,'update'])->middleware('auth:admin-api');
-    Route::put('/{project}',[ProjectController::class,'update'])->middleware('auth:admin-api');
-    Route::delete('/{project}',[ProjectController::class,'destroy'])->middleware('auth:admin-api');
+    Route::post('/', [ProjectController::class, 'store'])->middleware('auth:admin-api');
+    Route::patch('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
+    Route::put('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
+    Route::delete('/{project}', [ProjectController::class, 'destroy'])->middleware('auth:admin-api');
 
 });
 
-Route::group(['prefix'=>'units'],function (){
+Route::group(['prefix' => 'units'], function () {
 
-    Route::get('/',[UnitController::class,'index']);
-    Route::get('/{unit}',[UnitController::class,'show']);
+    Route::get('/', [UnitController::class, 'index']);
+    Route::get('/{unit}', [UnitController::class, 'show']);
 
 
     //---admin units---
 
-    Route::post('/',[UnitController::class,'store'])->middleware('auth:admin-api');
-    Route::patch('/{unit}',[UnitController::class,'update'])->middleware('auth:admin-api');
-    Route::put('/{unit}',[UnitController::class,'update'])->middleware('auth:admin-api');
-    Route::delete('/{unit}',[UnitController::class,'destroy'])->middleware('auth:admin-api');
-
+    Route::post('/', [UnitController::class, 'store'])->middleware('auth:admin-api');
+    Route::patch('/{unit}', [UnitController::class, 'update'])->middleware('auth:admin-api');
+    Route::put('/{unit}', [UnitController::class, 'update'])->middleware('auth:admin-api');
+    Route::delete('/{unit}', [UnitController::class, 'destroy'])->middleware('auth:v');
 
 
 });
 
-Route::group(['prefix'=>'developers'],function (){
+Route::group(['prefix' => 'developers'], function () {
 
-    Route::get('/',[DeveloperController::class,'index']);
-    Route::get('/{developer}',[DeveloperController::class,'show']);
+    Route::get('/', [DeveloperController::class, 'index']);
+    Route::get('/{developer}', [DeveloperController::class, 'show']);
 
 
-    Route::post('/register',[DeveloperController::class,'register']);
-    Route::post('/login',[DeveloperController::class,'login']);
+    Route::post('/register', [DeveloperController::class, 'register']);
+    Route::post('/login', [DeveloperController::class, 'login']);
+
 
 });
 
-Route::group(['prefix'=>'reservations','middleware'=>'auth:api'],function (){
+Route::group(['prefix' => 'reservations', 'middleware' => 'auth:api'], function () {
 
-    Route::get('/',[ReservationController::class,'index']);
-    Route::get('/{reservation}',[ReservationController::class,'show']);
-    Route::post('/',[ReservationController::class,'store']);
+    Route::get('/', [ReservationController::class, 'index']);
+    Route::get('/{reservation}', [ReservationController::class, 'show']);
+    Route::post('/', [ReservationController::class, 'store']);
 
-});
-
-
-Route::group(['prefix'=>'favorites','middleware'=>'auth:api'],function (){
-
-    Route::get('/',[FavoriteController::class,'index']);
-    Route::get('/{favorite}',[FavoriteController::class,'show']);
-    Route::post('/',[FavoriteController::class,'store']);
-    Route::delete('/{favorite}',[FavoriteController::class,'destroy']);
 
 });
 
 
+Route::group(['prefix' => 'favorites', 'middleware' => 'auth:api'], function () {
 
-Route::group(['prefix'=>'users'],function (){
+    Route::get('/', [FavoriteController::class, 'index']);
+    Route::get('/{favorite}', [FavoriteController::class, 'show']);
+    Route::post('/', [FavoriteController::class, 'store']);
+    Route::delete('/{favorite}', [FavoriteController::class, 'destroy']);
 
-    Route::post('/register',[AuthController::class,'register']);
-    Route::post('/login',[AuthController::class,'login']);
+});
+
+
+Route::group(['prefix' => 'users'], function () {
+
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 
 });
 
 
 //--------admins
-Route::group(['prefix'=>'admins'],function (){
+Route::group(['prefix' => 'admins'], function () {
 
-    Route::post('/register',[AdminController::class,'register']);
-    Route::post('/login',[AdminController::class,'login']);
+    Route::post('/register', [AdminController::class, 'register']);
+    Route::post('/login', [AdminController::class, 'login']);
 
 });
 

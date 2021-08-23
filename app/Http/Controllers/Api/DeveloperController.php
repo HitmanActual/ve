@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DeveloperController extends Controller
 {
@@ -29,17 +30,6 @@ class DeveloperController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Developer  $developer
@@ -51,7 +41,7 @@ class DeveloperController extends Controller
 
         try{
 
-            $developer = Unit::with('project')->findOrFail($developer);
+            $developer = Developer::with(['project'])->findOrFail($developer);
             return $this->successResponse($developer, Response::HTTP_OK);
 
         }catch(ModelNotFoundException $ex){
@@ -94,7 +84,7 @@ class DeveloperController extends Controller
         $validateData = $request->validate([
             'commercial_name' => 'required|max:55',
             'contact_person' => 'required|max:55',
-            'email' => 'email|required|unique:users',
+            'email' => 'email|required|unique:developer',
             'password' => 'required|confirmed',
             'phone' => 'required|regex:/(01)[0-9]{9}/',
 
