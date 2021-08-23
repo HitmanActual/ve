@@ -13,6 +13,7 @@ class Project extends Model
         'title',
         'city_id',
         'developer_id',
+        'tod',
 
     ];
 

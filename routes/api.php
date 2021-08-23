@@ -30,15 +30,19 @@ use App\Http\Controllers\Api\AuthController;
 //});
 
 
-
-
-//---
 Route::group(['prefix'=>'countries'],function(){
 
     Route::get('/',[CountryController::class,'index']);
 
     Route::get('/states/{country_id}', [StateController::class,'getStateByCountryId']);
     Route::get('/cities/{state_id}', [CityController::class,'getCityByStateId']);
+
+
+    //-----admin city routes----
+    Route::post('/',[CityController::class,'store'])->middleware('auth:admin-api');
+    Route::patch('/{city}',[CityController::class,'update'])->middleware('auth:admin-api');
+    Route::put('/{city}',[CityController::class,'update'])->middleware('auth:admin-api');
+    Route::delete('/{city}',[CityController::class,'destroy'])->middleware('auth:admin-api');
 
 });
 
@@ -47,7 +51,12 @@ Route::group(['prefix'=>'projects'],function (){
 
     Route::get('/',[ProjectController::class,'index']);
     Route::get('/{project}',[ProjectController::class,'show']);
-    Route::post('/',[ProjectController::class,'store']);
+
+    //---- admin routes ------
+    Route::post('/',[ProjectController::class,'store'])->middleware('auth:admin-api');
+    Route::patch('/{project}',[ProjectController::class,'update'])->middleware('auth:admin-api');
+    Route::put('/{project}',[ProjectController::class,'update'])->middleware('auth:admin-api');
+    Route::delete('/{project}',[ProjectController::class,'destroy'])->middleware('auth:admin-api');
 
 });
 
@@ -56,12 +65,19 @@ Route::group(['prefix'=>'units'],function (){
     Route::get('/',[UnitController::class,'index']);
     Route::get('/{unit}',[UnitController::class,'show']);
 
+
+    //---admin units---
+
 });
 
 Route::group(['prefix'=>'developers'],function (){
 
     Route::get('/',[DeveloperController::class,'index']);
     Route::get('/{developer}',[DeveloperController::class,'show']);
+
+
+    Route::post('/register',[DeveloperController::class,'register']);
+    Route::post('/login',[DeveloperController::class,'login']);
 
 });
 
@@ -102,13 +118,7 @@ Route::group(['prefix'=>'admins'],function (){
 });
 
 
-//--------developers
-Route::group(['prefix'=>'developers'],function (){
 
-    Route::post('/register',[DeveloperController::class,'register']);
-    Route::post('/login',[DeveloperController::class,'login']);
-
-});
 
 
 

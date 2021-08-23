@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Project\ProjectCollection;
 use App\Models\Project;
@@ -68,7 +69,7 @@ class ProjectController extends Controller
     public function show($project)
     {
         //
-        $project = Project::with('developer')->findOrFail($project);
+        $project = Project::with(['developer', 'city'])->findOrFail($project);
         return $this->successResponse($project, Response::HTTP_OK);
     }
 
@@ -81,9 +82,31 @@ class ProjectController extends Controller
      * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $project)
     {
         //
+        DB::beginTransaction();
+        try {
+
+
+            $project = Project::findOrFail($project);
+            $project->fill([
+                'title' => $request->title,
+                'city_id' => $request->city_id,
+                'developer_id' => $request->developer_id,
+                'tod' => $request->tod,
+            ]);
+            if ($project->isClean()) {
+                return $this->errorResponse('at least one value must be changed', Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            $project->save();
+            DB::commit();
+            return $this->successResponse($project, Response::HTTP_OK);
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+            abort(500, "couldn't update the order");
+        }
+
     }
 
     /**
@@ -92,8 +115,19 @@ class ProjectController extends Controller
      * @param \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($project)
     {
         //
+        try {
+
+            $project = Project::findOrFail($project);
+            $project->delete();
+            return $this->successResponse($project, Response::HTTP_OK);
+
+        } catch (ModelNotFoundException $exception) {
+            abort(500, "couldn't delete the project");
+
+        }
+
     }
 }
