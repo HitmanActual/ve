@@ -39,10 +39,25 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+
         DB::beginTransaction();
         try {
 
             $user = Auth::id();
+
+            $reservations = Reservation::where('user_id', $user)->with('unit')->get();
+
+
+            foreach ($reservations as $reserve){
+                $reserve->unit_id;
+
+                if($request->unit_id == $reserve->unit_id){
+                    return 'You already have this Unit in your Reservation list';
+                }
+
+            }
+
+
             $reservation = Reservation::create([
 
                 'user_id' => $user,

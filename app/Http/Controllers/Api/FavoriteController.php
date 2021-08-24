@@ -26,7 +26,9 @@ class FavoriteController extends Controller
         //
         //get all reservations for specific user
         $user = Auth::id();
+
         $favorites = Favorite::where('user_id', $user)->with('unit')->get();
+
         return $this->successResponse($favorites, Response::HTTP_OK);
     }
 
@@ -41,10 +43,26 @@ class FavoriteController extends Controller
     {
         //
 
+
         DB::beginTransaction();
         try {
 
             $user = Auth::id();
+
+
+            $favorites = Favorite::where('user_id', $user)->with('unit')->get();
+
+
+            foreach ($favorites as $fav){
+                $fav->unit_id;
+
+                if($request->unit_id == $fav->unit_id){
+                    return 'You already have this Unit in your Favorite list';
+                }
+
+            }
+
+
             $favorite = Favorite::create([
 
                 'user_id' => $user,
