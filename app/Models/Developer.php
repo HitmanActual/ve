@@ -13,12 +13,14 @@ class Developer extends Authenticatable
 
     //
     protected $guarded=['id'];
+
     protected $fillable = [
         'commercial_name',
         'contact_person',
         'email',
         'phone',
         'password',
+        'image_path',
     ];
 
     protected $hidden = [
@@ -33,6 +35,11 @@ class Developer extends Authenticatable
     public function getAuthPassword()
     {
         return $this->password;
+    }
+
+
+    public function getImagePathAttribute($val){
+        return ($val !==null)?asset('storage/developers/'.$val):"";
     }
 
 

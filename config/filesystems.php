@@ -64,6 +64,13 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+
+        'developers' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/developers'),
+            'url' => env('APP_URL') . '/storage/app/public/developers',
+        ],
+
     ],
 
     /*
@@ -78,7 +85,11 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+     // public_path('public_html/ve/developers') => storage_path('app/public'),
+
+      base_path('developers') => base_path('storage/app/public'),
+      //  base_path('public/developers') => base_path('storage/app/public'),
+
     ],
 
 ];

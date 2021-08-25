@@ -84,14 +84,22 @@ class DeveloperController extends Controller
         $validateData = $request->validate([
             'commercial_name' => 'required|max:55',
             'contact_person' => 'required|max:55',
-            'email' => 'email|required|unique:developer',
+            'email' => 'email|required|unique:developers',
             'password' => 'required|confirmed',
             'phone' => 'required|regex:/(01)[0-9]{9}/',
+            'image_path'=>'',
 
 
         ]);
 
+        $imagePath  = uploadImage('developers',$request->image_path);
+
         $validateData['password'] = bcrypt($request->password);
+        $validateData['image_path'] = $imagePath;
+
+
+
+
 
         $user = Developer::create($validateData);
         $accessToken = $user->createToken('authToken')->accessToken;
