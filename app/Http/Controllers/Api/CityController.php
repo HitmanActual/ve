@@ -24,10 +24,9 @@ class CityController extends Controller
 
     public function store(Request $request)
     {
-
         DB::beginTransaction();
         try {
-            $project = City::create([
+            $city = City::create([
 
                 'name' => $request->name,
                 'state_id' => $request->state_id,
@@ -35,10 +34,10 @@ class CityController extends Controller
 
 
             DB::commit();
-            return $this->successResponse($project, Response::HTTP_CREATED);
+            return $this->successResponse($city, Response::HTTP_CREATED);
         } catch (ModelNotFoundException $ex) {
             DB::rollBack();
-            abort(500, 'could add project');
+            abort(500, 'could not add city');
         }
     }
 

@@ -45,7 +45,7 @@ class ProjectController extends Controller
             'title' => 'required|max:255',
             'city_id' => 'required|max:255',
             'developer_id' => 'required|max:255',
-            'tod' => 'required|max:255',
+            'tod' => 'max:255',
         ]);
         DB::beginTransaction();
         try {

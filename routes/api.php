@@ -39,7 +39,7 @@ Route::group(['prefix' => 'countries'], function () {
 
 
     //-----admin city routes----
-    Route::post('/', [CityController::class, 'store'])->middleware('auth:admin-api');
+    Route::post('/add', [CityController::class, 'store'])->middleware('auth:admin-api');
     Route::patch('/{city}', [CityController::class, 'update'])->middleware('auth:admin-api');
     Route::put('/{city}', [CityController::class, 'update'])->middleware('auth:admin-api');
     Route::delete('/{city}', [CityController::class, 'destroy'])->middleware('auth:admin-api');
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'projects'], function () {
     Route::get('/{project}', [ProjectController::class, 'show']);
 
     //---- admin routes ------
-    Route::post('/', [ProjectController::class, 'store'])->middleware('auth:admin-api');
+    Route::post('/add', [ProjectController::class, 'store'])->middleware('auth:admin-api');
     Route::patch('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
     Route::put('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
     Route::delete('/{project}', [ProjectController::class, 'destroy'])->middleware('auth:admin-api');
@@ -68,10 +68,10 @@ Route::group(['prefix' => 'units'], function () {
 
     //---admin units---
 
-    Route::post('/', [UnitController::class, 'store'])->middleware('auth:admin-api');
+    Route::post('/add', [UnitController::class, 'store'])->middleware('auth:admin-api');
     Route::patch('/{unit}', [UnitController::class, 'update'])->middleware('auth:admin-api');
     Route::put('/{unit}', [UnitController::class, 'update'])->middleware('auth:admin-api');
-    Route::delete('/{unit}', [UnitController::class, 'destroy'])->middleware('auth:v');
+    Route::delete('/{unit}', [UnitController::class, 'destroy'])->middleware('auth:admin-api');
 
 
 });
