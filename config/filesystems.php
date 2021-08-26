@@ -88,7 +88,7 @@ return [
      // public_path('public_html/ve/developers') => storage_path('app/public'),
 
       base_path('developers') => base_path('storage/app/public'),
-      //  base_path('public/developers') => base_path('storage/app/public'),
+
 
     ],
 

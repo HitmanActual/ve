@@ -39,7 +39,7 @@ class Developer extends Authenticatable
 
 
     public function getImagePathAttribute($val){
-        return ($val !==null)?asset('storage/developers/'.$val):"";
+        return ($val !==null)?asset('developers/'.$val):"";
     }
 
 
