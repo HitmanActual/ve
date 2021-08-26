@@ -73,7 +73,7 @@ return [
 
         'projects' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/developers'),
+            'root' => storage_path('app/public/projects'),
             'url' => env('APP_URL') . '/storage/app/public/projects',
         ],
 
@@ -94,6 +94,7 @@ return [
      // public_path('public_html/ve/developers') => storage_path('app/public'),
 
       base_path('developers') => base_path('storage/app/public'),
+
 
 
     ],

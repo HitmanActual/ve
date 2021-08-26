@@ -23,7 +23,7 @@ class Image extends Model
 
 
     public function getImagePathAttribute($val){
-        return ($val !==null)?asset('projects/'.$val):"";
+        return ($val !==null)?asset('developers/'.$val):"";
     }
 
 

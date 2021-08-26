@@ -33,4 +33,9 @@ class Project extends Model
     public function image(){
         return $this->hasMany(Image::class);
     }
+
+
+    public function getImagePathAttribute($val){
+        return ($val !==null)?asset('developers/'.$val):"";
+    }
 }
