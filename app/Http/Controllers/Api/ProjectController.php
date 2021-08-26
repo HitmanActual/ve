@@ -67,8 +67,12 @@ class ProjectController extends Controller
                 foreach ($request->image_path as $file) {
 
 
-                    $fileName = $file->getClientOriginalName();
-                    $imageName =$file->storeAs('/public/projects',$fileName);
+                    $fileName = $file->getClientOriginalExtension();
+
+
+
+                    $newName = md5(microtime()).$file->getClientOriginalName().time().'.'.$fileName;
+                    $imageName =$file->storeAs('/public/projects',$newName);
 
                         $this->image->create([
 
