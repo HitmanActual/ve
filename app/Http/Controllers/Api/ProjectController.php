@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Project\ProjectCollection;
+use App\Models\Image;
 use App\Models\Project;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\DB;
 class ProjectController extends Controller
 {
     use ResponseTrait;
+    protected $image, $project;
+
+    public function __construct()
+    {
+        $this->image = new Image();
+        $this->project = new Project();
+    }
 
     /**
      * Display a listing of the resource.
@@ -27,7 +34,6 @@ class ProjectController extends Controller
 
         $projects = Project::with('developer', 'city')->get();
         return $this->successResponse($projects, Response::HTTP_OK);
-        //ProjectCollection::collection(Project::with('developer')->get());
 
     }
 
@@ -41,6 +47,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+
         $validateDate = $request->validate([
             'title' => 'required|max:255',
             'city_id' => 'required|max:255',
@@ -49,7 +56,30 @@ class ProjectController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $project = Project:: create($validateDate);
+
+
+            $project = $this->project->create($validateDate);
+
+
+            if ($request->hasFile('image_path')) {
+
+
+                foreach ($request->image_path as $file) {
+
+
+                    $fileName = $file->getClientOriginalName();
+                    $imageName =$file->storeAs('/public/projects',$fileName);
+
+                        $this->image->create([
+
+                            'image_path' => $imageName,
+                            'project_id' => $project->id,
+
+                        ]);
+
+                }
+
+            }
 
 
             DB::commit();

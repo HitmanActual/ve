@@ -71,6 +71,12 @@ return [
             'url' => env('APP_URL') . '/storage/app/public/developers',
         ],
 
+        'projects' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/developers'),
+            'url' => env('APP_URL') . '/storage/app/public/projects',
+        ],
+
     ],
 
     /*

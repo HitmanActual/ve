@@ -28,4 +28,9 @@ class Project extends Model
     public function unit(){
         return $this->hasMany(Unit::class);
     }
+
+
+    public function image(){
+        return $this->hasMany(Image::class);
+    }
 }
