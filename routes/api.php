@@ -132,10 +132,9 @@ Route::group(['prefix' => 'admins'], function () {
 
 
 
-   // Route::get('/user/notifications',[AdminController::class,'notifications'])->middleware('admin-api');
-    Route::get('/notifications/all',[AdminController::class,'all_notifications']);
-
-   // Route::get('/user/markasread/{notification_id}',[AdminController::class,'markasread'])->middleware('admin-api');
+   Route::get('/notifications',[AdminController::class,'notifications']);
+   Route::get('/notifications/all',[AdminController::class,'all_notifications']);
+   Route::get('/markasread/{notification_id}',[AdminController::class,'markasread']);
 
 
 });

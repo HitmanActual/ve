@@ -70,6 +70,12 @@ class AdminController extends Controller
     public function notifications()
     {
 
+        if (!Auth::guard('admin-api')->check()){
+
+            return 'you are not Authorized';
+        }
+
+
         $notifications  = auth('admin-api')->user()->unreadNotifications()->limit(5)->get()->toArray();
         return $this->successResponse($notifications,Response::HTTP_OK);
 
@@ -82,7 +88,7 @@ class AdminController extends Controller
 
         if (!Auth::guard('admin-api')->check()){
 
-            return 'you are not authenticated';
+            return 'you are not Authorized';
         }
 
         $notifications = auth('admin-api')->user()->unreadNotifications()->get()->toArray();
@@ -93,7 +99,13 @@ class AdminController extends Controller
     public function markasread($id)
     {
 
-        auth('api')->user();
+        if (!Auth::guard('admin-api')->check()){
+
+            return 'you are not Authorized';
+        }
+
+
+        auth('admin-api')->user();
         $notification = auth('admin-api')->user()->notifications()->where('id', $id)->first();
         if ($notification) {
             $notification->markAsRead();
