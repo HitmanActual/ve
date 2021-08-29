@@ -62,6 +62,12 @@ class AuthController extends Controller
     public function notifications()
     {
 
+        if (!Auth::guard('api')->check()){
+
+            return 'you are not Authorized';
+        }
+
+
         $notifications  = auth('api')->user()->unreadNotifications()->limit(5)->get()->toArray();
         return $this->successResponse($notifications,Response::HTTP_OK);
 
@@ -70,6 +76,11 @@ class AuthController extends Controller
     public function all_notifications()
     {
 
+        if (!Auth::guard('api')->check()){
+
+            return 'you are not Authorized';
+        }
+
         $notifications = auth('api')->user()->unreadNotifications()->get()->toArray();
         return $this->successResponse($notifications,Response::HTTP_OK);
     }
@@ -77,6 +88,12 @@ class AuthController extends Controller
 
     public function markasread($id)
     {
+
+        if (!Auth::guard('api')->check()){
+
+            return 'you are not Authorized';
+        }
+
 
         auth('api')->user();
         $notification = auth('api')->user()->notifications()->where('id', $id)->first();

@@ -96,12 +96,6 @@ Route::group(['prefix' => 'reservations', 'middleware' => 'auth:api'], function 
 
 
 
-    //-----notifications
-
-    Route::get('/user/notifications',[AuthController::class,'notifications']);
-
-    Route::get('/user/markasread/{notification_id}',[AuthController::class,'markasread']);
-
 
 });
 
@@ -120,6 +114,14 @@ Route::group(['prefix' => 'users'], function () {
 
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
+
+
+
+    //-----notifications
+
+    Route::get('/notifications',[AuthController::class,'notifications']);
+    Route::get('/markasread/{notification_id}',[AuthController::class,'markasread']);
+
 
 });
 
