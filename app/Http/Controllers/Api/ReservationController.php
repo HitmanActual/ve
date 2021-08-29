@@ -4,17 +4,31 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Admin;
 use App\Models\Reservation;
+use App\Models\User;
+use App\Notifications\ReservationPlaced;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class ReservationController extends Controller
 {
     use ResponseTrait;
+
+    protected $reservation;
+
+    public function __construct()
+    {
+
+        $this->reservation = new Reservation();
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -45,10 +59,14 @@ class ReservationController extends Controller
 
             $user = Auth::id();
 
+
+            $admins = Admin::all();
+
             $reservations = Reservation::where('user_id', $user)->with('unit')->get();
 
 
             foreach ($reservations as $reserve){
+
                 $reserve->unit_id;
 
                 if($request->unit_id == $reserve->unit_id){
@@ -64,11 +82,18 @@ class ReservationController extends Controller
                 'unit_id' => $request->unit_id,
             ]);
             DB::commit();
+
+           Notification::send($admins, new ReservationPlaced($reservation));
+
+          User::find($user)->notify(new ReservationPlaced($reservation));
+
+
+
             return $this->successResponse($reservation, Response::HTTP_CREATED);
 
         } catch (ModelNotFoundException $ex) {
             DB::rollBack();
-            abort(500, 'could add project');
+            abort(500, 'could not add unit');
         }
 
 

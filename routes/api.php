@@ -95,6 +95,15 @@ Route::group(['prefix' => 'reservations', 'middleware' => 'auth:api'], function 
     Route::post('/', [ReservationController::class, 'store']);
 
 
+
+    //-----notifications
+
+    Route::get('/user/notifications',[AuthController::class,'notifications']);
+    Route::get('/user/notifications/all',[AuthController::class,'all_notifications']);
+
+    Route::get('/user/markasread/{notification_id}',[AuthController::class,'markasread']);
+
+
 });
 
 

@@ -32,7 +32,7 @@ class ProjectController extends Controller
     {
         //
 
-        $projects = Project::with('developer', 'city','image')->get();
+        $projects = Project::with('developer', 'city', 'image')->get();
         return $this->successResponse($projects, Response::HTTP_OK);
 
     }
@@ -69,15 +69,15 @@ class ProjectController extends Controller
 
                     $fileName = $file->getClientOriginalExtension();
 
-                    $newName = md5(microtime()).time().'.'.$fileName;
-                    $imageName =$file->storeAs('/public/projects',$newName);
+                    $newName = md5(microtime()) . time() . '.' . $fileName;
+                    $file->storeAs('/public/projects', $newName);
 
-                        $this->image->create([
+                    $this->image->create([
 
-                            'image_path' => 'projects/'.$newName,
-                            'project_id' => $project->id,
+                        'image_path' => 'projects/' . $newName,
+                        'project_id' => $project->id,
 
-                        ]);
+                    ]);
 
                 }
 
@@ -101,7 +101,7 @@ class ProjectController extends Controller
     public function show($project)
     {
         //
-        $project = Project::with(['developer', 'city','image'])->findOrFail($project);
+        $project = Project::with(['developer', 'city', 'image'])->findOrFail($project);
         return $this->successResponse($project, Response::HTTP_OK);
     }
 
