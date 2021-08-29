@@ -99,7 +99,6 @@ Route::group(['prefix' => 'reservations', 'middleware' => 'auth:api'], function 
     //-----notifications
 
     Route::get('/user/notifications',[AuthController::class,'notifications']);
-    Route::get('/user/notifications/all',[AuthController::class,'all_notifications']);
 
     Route::get('/user/markasread/{notification_id}',[AuthController::class,'markasread']);
 
@@ -130,6 +129,14 @@ Route::group(['prefix' => 'admins'], function () {
 
     Route::post('/register', [AdminController::class, 'register']);
     Route::post('/login', [AdminController::class, 'login']);
+
+
+
+   // Route::get('/user/notifications',[AdminController::class,'notifications'])->middleware('admin-api');
+    Route::get('/notifications/all',[AdminController::class,'all_notifications']);
+
+   // Route::get('/user/markasread/{notification_id}',[AdminController::class,'markasread'])->middleware('admin-api');
+
 
 });
 

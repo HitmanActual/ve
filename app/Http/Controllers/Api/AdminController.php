@@ -63,4 +63,42 @@ class AdminController extends Controller
         Auth::logout();
         return $this->successResponse('successfully logged out', Response::HTTP_OK);
     }
+
+
+
+    //----notifications
+    public function notifications()
+    {
+
+        $notifications  = auth('admin-api')->user()->unreadNotifications()->limit(5)->get()->toArray();
+        return $this->successResponse($notifications,Response::HTTP_OK);
+
+    }
+
+    public function all_notifications()
+    {
+
+
+
+        if (!Auth::guard('admin-api')->check()){
+
+            return 'you are not authenticated';
+        }
+
+        $notifications = auth('admin-api')->user()->unreadNotifications()->get()->toArray();
+        return $this->successResponse($notifications,Response::HTTP_OK);
+    }
+
+
+    public function markasread($id)
+    {
+
+        auth('api')->user();
+        $notification = auth('admin-api')->user()->notifications()->where('id', $id)->first();
+        if ($notification) {
+            $notification->markAsRead();
+        }
+    }
+
+
 }
