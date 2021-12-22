@@ -41,7 +41,7 @@ class DeveloperController extends Controller
 
         try{
 
-            $developer = Developer::with(['project'])->findOrFail($developer);
+            $developer = Developer::with(['project','project.image','project.city','project.city.state.country'])->findOrFail($developer);
             return $this->successResponse($developer, Response::HTTP_OK);
 
         }catch(ModelNotFoundException $ex){
@@ -92,7 +92,7 @@ class DeveloperController extends Controller
 
         ]);
 
-        $imagePath  = uploadImage('developers',$request->image_path);
+            $imagePath  = uploadImage('developers',$request->image_path);
 
         $validateData['password'] = bcrypt($request->password);
         $validateData['image_path'] = $imagePath;

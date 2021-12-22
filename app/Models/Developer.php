@@ -21,6 +21,8 @@ class Developer extends Authenticatable
         'phone',
         'password',
         'image_path',
+        'address',
+        'about'
     ];
 
     protected $hidden = [

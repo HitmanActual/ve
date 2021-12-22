@@ -25,4 +25,18 @@ class City extends Model
 
     }
 
+
+    public function project()
+    {
+        return $this->hasMany(Project::class);
+
+    }
+
+
+    public function developer()
+    {
+        return $this->hasMany(Developer::class);
+
+    }
+
 }

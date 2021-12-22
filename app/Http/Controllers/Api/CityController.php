@@ -15,11 +15,33 @@ class CityController extends Controller
     //
     use ResponseTrait;
 
+
+    public function index()
+    {
+        $cities = City::with('project', 'project.image', 'project.developer')->has('project')->get();
+
+        return $this->successResponse($cities, Response::HTTP_OK);
+    }
+
     public function getCityByStateId($id)
     {
         $cities = City::where('state_id', $id)->get();
         return $this->successResponse($cities, Response::HTTP_OK);
     }
+
+
+    //getProjectsByCity
+
+    public function show($city)
+    {
+
+        $city = City::with('project', 'project.developer', 'project.image')->findOrFail($city);
+        return $this->successResponse($city, Response::HTTP_OK);
+
+    }
+
+
+
 
 
     public function store(Request $request)

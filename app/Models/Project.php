@@ -14,6 +14,8 @@ class Project extends Model
         'city_id',
         'developer_id',
         'tod',
+        'description',
+
 
     ];
 

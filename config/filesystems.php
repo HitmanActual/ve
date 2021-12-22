@@ -77,6 +77,13 @@ return [
             'url' => env('APP_URL') . '/storage/app/public/projects',
         ],
 
+
+        'bundle' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/bundle'),
+            'url' => env('APP_URL') . '/storage/app/public/bundle',
+        ],
+
     ],
 
     /*
@@ -94,7 +101,6 @@ return [
      // public_path('public_html/ve/developers') => storage_path('app/public'),
 
       base_path('developers') => base_path('storage/app/public'),
-
 
 
     ],

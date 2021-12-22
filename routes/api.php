@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AssetBundleController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ReservationController;
@@ -47,16 +48,26 @@ Route::group(['prefix' => 'countries'], function () {
 });
 
 
+Route::group(['prefix' => 'cities'], function () {
+
+    Route::get('/', [CityController::class, 'index']);
+    Route::get('/{city}', [CityController::class, 'show']);
+
+});
+
+
 Route::group(['prefix' => 'projects'], function () {
 
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{project}', [ProjectController::class, 'show']);
+
 
     //---- admin routes ------
     Route::post('/add', [ProjectController::class, 'store'])->middleware('auth:admin-api');
     Route::patch('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
     Route::put('/{project}', [ProjectController::class, 'update'])->middleware('auth:admin-api');
     Route::delete('/{project}', [ProjectController::class, 'destroy'])->middleware('auth:admin-api');
+
 
 });
 
@@ -137,6 +148,22 @@ Route::group(['prefix' => 'admins'], function () {
    Route::get('/notifications',[AdminController::class,'notifications']);
    Route::get('/notifications/all',[AdminController::class,'all_notifications']);
    Route::get('/markasread/{notification_id}',[AdminController::class,'markasread']);
+
+
+});
+
+
+Route::group(['prefix' => 'bundles'], function () {
+
+    Route::get('/assets', [AssetBundleController::class, 'index']);
+    Route::get('/assets/{asset}', [AssetBundleController::class, 'show']);
+
+    Route::post('/asset', [AssetBundleController::class, 'store']);
+
+
+    Route::get('/get-value', [AssetBundleController::class, 'getAssetBundle']);
+
+
 
 
 });

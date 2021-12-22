@@ -101,9 +101,13 @@ class ProjectController extends Controller
     public function show($project)
     {
         //
-        $project = Project::with(['developer', 'city', 'image'])->findOrFail($project);
+        $project = Project::with(['developer', 'city', 'image','city.state.country'])->findOrFail($project);
         return $this->successResponse($project, Response::HTTP_OK);
     }
+
+
+
+
 
 
     /**
