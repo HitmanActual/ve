@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\DeveloperController;
+use App\Http\Controllers\Api\NoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CityController;
@@ -163,9 +164,14 @@ Route::group(['prefix' => 'bundles'], function () {
 
     Route::get('/get-value', [AssetBundleController::class, 'getAssetBundle']);
 
+});
 
 
+Route::group(['prefix' => 'notes', 'middleware' => 'auth:api'], function () {
 
+    Route::get('/', [NoteController::class, 'index']);
+    Route::get('/{note}', [NoteController::class, 'show']);
+    Route::post('/note', [NoteController::class, 'store']);
 });
 
 

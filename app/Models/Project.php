@@ -40,4 +40,8 @@ class Project extends Model
     public function getImagePathAttribute($val){
         return ($val !==null)?asset('developers/'.$val):"";
     }
+
+    public function notes(){
+        return $this->hasMany(Note::class);
+    }
 }
